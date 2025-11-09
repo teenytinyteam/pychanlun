@@ -1,5 +1,5 @@
-from pychan.stock import Stock, StockItem
-from pychan.stroke import Stroke
+from pychanlun.stock import Stock, StockItem
+from pychanlun.stroke import Stroke
 
 
 class Segment(Stock):
@@ -98,8 +98,3 @@ class Segment(Stock):
             if highest is None or high.item.high > highest.item.high:
                 highest = high
         return highest
-
-
-if __name__ == '__main__':
-    segment = Segment('AAPL')
-    print(segment.data['1m'])

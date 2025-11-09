@@ -1,7 +1,7 @@
 import pandas as pd
 import yfinance as yf
 
-from pychan.stock import Stock
+from pychanlun.stock import Stock
 
 
 class Source(Stock):
@@ -71,8 +71,3 @@ class Source(Stock):
         df['bb_upper'] = df['bb'] + (2 * rolling_std)
         df['bb_lower'] = df['bb'] - (2 * rolling_std)
         return df
-
-
-if __name__ == '__main__':
-    source = Source('AAPL')
-    print(source.data['1m'])

@@ -1,7 +1,7 @@
 import numpy as np
 
-from pychan.stick import Stick
-from pychan.stock import Stock
+from pychanlun.stick import Stick
+from pychanlun.stock import Stock
 
 
 class Fractal(Stock):
@@ -40,8 +40,3 @@ class Fractal(Stock):
     @staticmethod
     def _is_bottom_fractal(prev, cur, nxt):
         return cur.low < prev.low and (nxt is None or cur.low < nxt.low)
-
-
-if __name__ == '__main__':
-    fractal = Fractal('AAPL')
-    print(fractal.data['1m'])

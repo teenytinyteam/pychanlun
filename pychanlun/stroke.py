@@ -1,5 +1,5 @@
-from pychan.fractal import Fractal
-from pychan.stock import Stock, StockItem
+from pychanlun.fractal import Fractal
+from pychanlun.stock import Stock, StockItem
 
 
 class Stroke(Stock):
@@ -80,8 +80,3 @@ class Stroke(Stock):
                 or (self._is_bottom(cur.item) and nxt.item.low <= cur.item.low)):
             return [nxt]
         return temps
-
-
-if __name__ == '__main__':
-    stroke = Stroke('AAPL')
-    print(stroke.data['1m'])

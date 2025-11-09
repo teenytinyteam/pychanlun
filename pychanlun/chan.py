@@ -1,7 +1,7 @@
 import pandas as pd
 
-from pychan.segment import Segment
-from pychan.sign import Sign
+from pychanlun.segment import Segment
+from pychanlun.signal import Signal
 
 
 class Chan:
@@ -9,8 +9,8 @@ class Chan:
     def __init__(self, symbol):
         self.symbol = symbol
         self.segment = Segment(symbol)
-        self.stroke_sign = Sign(self.segment.stroke)
-        self.segment_sign = Sign(self.segment)
+        self.stroke_sign = Signal(self.segment.stroke)
+        self.segment_sign = Signal(self.segment)
 
     def get_sticks(self, interval):
         df = self.segment.source.data[interval]
@@ -99,45 +99,31 @@ class Chan:
     @staticmethod
     def _get_pivots(df):
         df = pd.DataFrame({
-            'start': df.index.values[::2],
-            'end': df.index.values[1::2],
-            'start_high': df['high'].values[::2],
-            'end_high': df['high'].values[1::2],
-            'start_low': df['low'].values[::2],
-            'end_low': df['low'].values[1::2],
-            'start_macd': df['macd'].values[::2],
-            'end_macd': df['macd'].values[1::2],
+            'entry': df.index.values[::2],
+            'exit': df.index.values[1::2],
+            'entry_high': df['high'].values[::2],
+            'exit_high': df['high'].values[1::2],
+            'entry_low': df['low'].values[::2],
+            'exit_low': df['low'].values[1::2],
+            'entry_macd': df['macd'].values[::2],
+            'exit_macd': df['macd'].values[1::2],
             'trend': df['trend'].values[::2],
             'divergence': df['divergence'].values[::2]
         })
-        df['high'] = df['start_high'].fillna(df['end_high'])
-        df['low'] = df['start_low'].fillna(df['end_low'])
-        return df[['start', 'end', 'high', 'low', 'start_macd', 'end_macd', 'trend', 'divergence']]
+        df['high'] = df['entry_high'].fillna(df['exit_high'])
+        df['low'] = df['entry_low'].fillna(df['exit_low'])
+        return df[['entry', 'exit', 'high', 'low', 'entry_macd', 'exit_macd', 'trend', 'divergence']]
 
     @staticmethod
     def _get_trends(df):
         return pd.DataFrame({
-            'start': df.index.values[::2],
-            'end': df.index.values[1::2],
-            'start_price': df['price'].values[::2],
-            'end_price': df['price'].values[1::2]
+            'entry': df.index.values[::2],
+            'exit': df.index.values[1::2],
+            'entry_price': df['price'].values[::2],
+            'exit_price': df['price'].values[1::2]
         })
 
     @staticmethod
     def _get_signals(df):
         df['price'] = df['high'].fillna(df['low'])
         return df[['price', 'signal']]
-
-
-if __name__ == '__main__':
-    chan = Chan('AAPL')
-    print(chan.get_sticks('1m'))
-    print(chan.get_fractals('1m'))
-    print(chan.get_strokes('1m'))
-    print(chan.get_stroke_pivots('1m'))
-    print(chan.get_stroke_pivot_trends('1m'))
-    print(chan.get_stroke_pivot_signals('1m'))
-    print(chan.get_segments('1m'))
-    print(chan.get_segment_pivots('1m'))
-    print(chan.get_segment_pivot_trends('1m'))
-    print(chan.get_segment_pivot_signals('1m'))

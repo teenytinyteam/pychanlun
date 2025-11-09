@@ -1,5 +1,5 @@
-from pychan.source import Source
-from pychan.stock import Stock
+from pychanlun.source import Source
+from pychanlun.stock import Stock
 
 
 class Stick(Stock):
@@ -61,8 +61,3 @@ class Stick(Stock):
             return cur._replace(low=nxt.low)
         else:
             return cur._replace(high=nxt.high)
-
-
-if __name__ == '__main__':
-    stick = Stick('AAPL')
-    print(stick.data['1m'])

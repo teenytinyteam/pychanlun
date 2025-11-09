@@ -1,9 +1,5 @@
-import pandas as pd
-
-from pychan.pivot import Pivot
-from pychan.segment import Segment
-from pychan.stock import Stock
-from pychan.stroke import Stroke
+from pychanlun.pivot import Pivot
+from pychanlun.stock import Stock
 
 
 class Trend(Stock):
@@ -79,12 +75,3 @@ class Trend(Stock):
         pivot_1.end = pivot_1.end._replace(divergence=pivot_1.start.divergence)
 
         return trend
-
-
-if __name__ == '__main__':
-    pd.set_option('display.max_columns', None)
-    trend = Trend(Stroke('AAPL'))
-    print(trend.data['1m'])
-    trend = Trend(Segment('AAPL'))
-    print(trend.data['1m'])
-    pd.reset_option('display.max_columns')

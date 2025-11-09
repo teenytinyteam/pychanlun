@@ -1,6 +1,4 @@
-from pychan.segment import Segment
-from pychan.stock import Stock, Range
-from pychan.stroke import Stroke
+from pychanlun.stock import Stock, Range
 
 
 class Pivot(Stock):
@@ -84,10 +82,3 @@ class Pivot(Stock):
     @staticmethod
     def _is_out_of_pivot(range_1, range_2):
         return range_2.high < range_1.low or range_2.low > range_1.high
-
-
-if __name__ == '__main__':
-    pivot = Pivot(Stroke('AAPL'))
-    print(pivot.data['1m'])
-    pivot = Pivot(Segment('AAPL'))
-    print(pivot.data['1m'])

@@ -1,10 +1,8 @@
-from pychan.segment import Segment
-from pychan.stock import Stock
-from pychan.stroke import Stroke
-from pychan.trend import Trend
+from pychanlun.stock import Stock
+from pychanlun.trend import Trend
 
 
-class Sign(Stock):
+class Signal(Stock):
 
     def __init__(self, segment):
         self.trend = Trend(segment)
@@ -67,10 +65,3 @@ class Sign(Stock):
             nxt_3 = nxt_3._replace(signal=-3)
             return nxt_3
         return None
-
-
-if __name__ == '__main__':
-    sign = Sign(Stroke('AAPL'))
-    print(sign.data['1m'])
-    sign = Sign(Segment('AAPL'))
-    print(sign.data['1m'])
